@@ -1,1 +1,8 @@
+@if (!isUserLoactionReady) {
 <app-loading />
+}@else {
+<ng-template #mapReady>
+    <app-map-view />
+</ng-template>
+
+}
