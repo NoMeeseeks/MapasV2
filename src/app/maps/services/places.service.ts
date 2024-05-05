@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, Query, inject } from '@angular/core';
 import { Feature, PlacesResponse } from '../interfaces/places';
 import { PlacesApiClient } from '../api/placesApi.Client';
+import { MapService } from './map.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import { PlacesApiClient } from '../api/placesApi.Client';
 export class PlacesService {
 
   private http = inject(PlacesApiClient)
+  private mapService = inject(MapService)
 
   public userLocation: [number, number] | undefined;
   public isLoadingPlaces: boolean = false;
@@ -47,6 +49,7 @@ export class PlacesService {
       .subscribe(resp => {
         this.isLoadingPlaces = false;
         this.places = resp.features
+        this.mapService.createMarkersPlaces(resp.features, this.userLocation!)
       })
   }
 }

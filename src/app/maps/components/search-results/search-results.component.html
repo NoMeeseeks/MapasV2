@@ -8,7 +8,7 @@
     @for (item of places; track $index) {
     <li class="list-group-item list-group-item-action pointer" [class.active]="item.id === selectedId">
         <h6>{{item.properties.name}}</h6>
-        <p>{{item.properties.place_formatted}}</p>
+        <p>{{item.properties.full_address}}</p>
         <button class="btn btn-sm" [ngClass]="item.id === selectedId ? 'btn-outline-light':'btn-outline-primary'"
             (click)="flyTo(item)">
             Direcciones
