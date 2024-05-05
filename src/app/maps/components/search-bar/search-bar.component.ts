@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { timeout } from 'rxjs';
+import { PlacesService } from '../../services';
 
 @Component({
   selector: 'app-search-bar',
@@ -8,6 +9,7 @@ import { timeout } from 'rxjs';
 })
 export class SearchBarComponent {
   private debounceTimer?: NodeJS.Timeout;
+  private placesService = inject(PlacesService)
   constructor() {
 
   }
@@ -15,8 +17,7 @@ export class SearchBarComponent {
     if (this.debounceTimer) clearTimeout(this.debounceTimer);
 
     this.debounceTimer = setTimeout(() => {
-      console.log('Mandar');
-
+      this.placesService.getPlacesByQuery(query)
     }, 500)
   }
 }
