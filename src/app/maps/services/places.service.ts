@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Query, inject } from '@angular/core';
-import { Feature, Places } from '../interfaces/places';
+import { Feature, PlacesResponse } from '../interfaces/places';
 import { PlacesApiClient } from '../api/placesApi.Client';
 
 @Injectable({
@@ -39,13 +39,12 @@ export class PlacesService {
   getPlacesByQuery(query: string = '') {
     if (!this.userLocation) { return }
     this.isLoadingPlaces = true;
-    this.http.get<Places>(`/forward?q=${query}`, {
+    this.http.get<PlacesResponse>(`/forward?q=${query}`, {
       params: {
         proximity: this.userLocation.join(',')
       }
     })
       .subscribe(resp => {
-        console.log(resp.features)
         this.isLoadingPlaces = false;
         this.places = resp.features
       })

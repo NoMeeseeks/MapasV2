@@ -1,51 +1,47 @@
-export interface Places {
-    type:        string;
-    features:    Feature[];
+export interface PlacesResponse {
+    type: string;
+    features: Feature[];
     attribution: string;
 }
 
 export interface Feature {
-    type:       string;
-    id:         string;
-    geometry:   Geometry;
+    type: string;
+    id: string;
+    geometry: Geometry;
     properties: Properties;
 }
 
 export interface Geometry {
-    type:        string;
+    type: string;
     coordinates: number[];
 }
 
 export interface Properties {
-    mapbox_id:       string;
-    feature_type:    string;
-    full_address:    string;
-    name:            string;
-    name_preferred:  string;
-    coordinates:     Coordinates;
+    mapbox_id: string;
+    feature_type: string;
+    full_address: string;
+    name: string;
+    name_preferred: string;
+    coordinates: Coordinates;
     place_formatted: string;
-    bbox?:           number[];
-    context:         Context;
+    bbox: number[];
+    context: Context;
 }
 
 export interface Context {
-    place:         District;
-    region:        Region;
-    country:       Country;
-    locality?:     District;
-    street?:       Postcode;
-    postcode?:     Postcode;
-    neighborhood?: District;
-    district?:     District;
+    region: Region;
+    country: Country;
+    place: Locality;
+    locality?: Locality;
 }
 
 export interface Country {
-    mapbox_id:            string;
-    name:                 string;
-    wikidata_id:          string;
-    country_code:         string;
+    mapbox_id: string;
+    name: string;
+    wikidata_id: string;
+    country_code: string;
     country_code_alpha_3: string;
-    translations:         Translations;
+    translations: Translations;
 }
 
 export interface Translations {
@@ -54,36 +50,32 @@ export interface Translations {
 
 export interface Es {
     language: Language;
-    name:     string;
+    name: string;
 }
 
 export enum Language {
     Es = "es",
     Fr = "fr",
+    Pt = "pt",
 }
 
-export interface District {
-    mapbox_id:    string;
-    name:         string;
-    wikidata_id?: string;
-    translations: Translations;
-}
-
-export interface Postcode {
+export interface Locality {
     mapbox_id: string;
-    name:      string;
+    name: string;
+    translations: Translations;
+    wikidata_id: string;
 }
 
 export interface Region {
-    mapbox_id:        string;
-    name:             string;
-    wikidata_id:      string;
-    region_code:      string;
+    mapbox_id: string;
+    name: string;
+    wikidata_id: string;
+    region_code: string;
     region_code_full: string;
-    translations:     Translations;
+    translations: Translations;
 }
 
 export interface Coordinates {
     longitude: number;
-    latitude:  number;
+    latitude: number;
 }
