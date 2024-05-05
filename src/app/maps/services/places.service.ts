@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Query, inject } from '@angular/core';
 import { Feature, Places } from '../interfaces/places';
+import { PlacesApiClient } from '../api/placesApi.Client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlacesService {
 
-  private http = inject(HttpClient)
+  private http = inject(PlacesApiClient)
 
   public userLocation: [number, number] | undefined;
   public isLoadingPlaces: boolean = false;
@@ -36,8 +37,13 @@ export class PlacesService {
   }
 
   getPlacesByQuery(query: string = '') {
+    if (!this.userLocation) { return }
     this.isLoadingPlaces = true;
-    this.http.get<Places>(`https://api.mapbox.com/search/geocode/v6/forward?q=${query}&proximity=ip&language=es&access_token=pk.eyJ1IjoiZGV2LXhhdmllciIsImEiOiJjbHV5OXRpOXgwNjUyMmlvYWdoa290NnFwIn0.XetX3TUEducu_MnsP4X3_g`)
+    this.http.get<Places>(`/forward?q=${query}`, {
+      params: {
+        proximity: this.userLocation.join(',')
+      }
+    })
       .subscribe(resp => {
         console.log(resp.features)
         this.isLoadingPlaces = false;
