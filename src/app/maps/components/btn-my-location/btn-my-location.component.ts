@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { MapService, PlacesService } from '../../services';
 
 @Component({
   selector: 'app-btn-my-location',
@@ -6,8 +7,12 @@ import { Component } from '@angular/core';
   styleUrl: './btn-my-location.component.css'
 })
 export class BtnMyLocationComponent {
-
+  public placesServices = inject(PlacesService)
+  public mapServices = inject(MapService)
   goToMyLocation() {
+    if (!this.placesServices.isUserLocationReady) { return }
+    if (!this.mapServices.isMapReady) { return }
 
+    this.mapServices.flyTo(this.placesServices.userLocation!)
   }
 }
