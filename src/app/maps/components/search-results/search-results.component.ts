@@ -26,4 +26,16 @@ export class SearchResultsComponent {
     this.selectedId = place.id
     this.mapService.flyTo([place.properties.coordinates.longitude, place.properties.coordinates.latitude])
   }
+
+  getDirections(place: Feature) {
+    if (!this.placesService.userLocation) { throw Error("No se encuentra la ubicacion del usuario") }
+
+    const start = this.placesService.userLocation;
+    // const end = [place.properties.coordinates.longitude, place.properties.coordinates.latitude]
+
+    this.mapService.getRouteBetweenPoints(start, [place.properties.coordinates.longitude, place.properties.coordinates.latitude]);
+
+    this.placesService.deletePlaces()
+  }
+
 }
